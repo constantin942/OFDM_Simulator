@@ -22,20 +22,11 @@ public class SendService extends Thread {
     private final SignalRepository signalRepository;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public void startup() {
-        new Thread(this).start();
-    }
-
-    public List<Prb> sendPrb() {
-        List<Prb> prbs = prbRepository.findAll();
-        simpMessagingTemplate.convertAndSend("/prb", prbs);
-        return prbs;
-    }
 
     public void continuousTrans() {
         for (; ; ) {
             try {
-                Thread.sleep(4500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -47,9 +38,18 @@ public class SendService extends Thread {
                 continue;
 //            System.out.println("signalList: " + signalList);
 //            System.out.println("prbList: " + prbList);
+            int minIndex = prbList.get(0).getEmptyIndex();
+            int shift_value = 0;
+            for (Prb each : prbList) {
+                if (minIndex > each.getEmptyIndex()) {
+                    break;
+                }
+                ++shift_value;
+            }
+            prbList = shiftListLeft(prbList, shift_value);
             int out = 0;
             if (signalNum <= prbNum) {
-                int index = 0;
+                int index;
                 int shift = 0;
                 for (int i = 0; i < prbNum; i++) {
                     if (signalNum > i) {
@@ -74,22 +74,18 @@ public class SendService extends Thread {
                 }
             } else {
                 // TODO: signalNum > prbNum case
-                int minIndex = prbList.get(0).getEmptyIndex();
-                int shift_value = 0;
-                for (Prb each : prbList) {
-                    if (minIndex > each.getEmptyIndex()) {
-                        minIndex = each.getEmptyIndex();
-                        break;
-                    }
-                    ++shift_value;
-                }
-                prbList = shiftList(prbList, shift_value);
 
             }
+            // do all time
             signalRepository.saveAll(signalList);
             prbRepository.saveAll(prbList);
             sendPrb();
-            if (out == 19) {
+            if (out == 1) {
+                try {
+                    Thread.sleep(4000); // same as before for database writing
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 signalRepository.deleteAll();
                 prbRepository.deleteAll();
                 break;
@@ -97,15 +93,15 @@ public class SendService extends Thread {
         }
     }
 
-    public List<Prb> shiftList(List<Prb> prbs, int k) {
+    public List<Prb> shiftListLeft(List<Prb> prbs, int k) {
         int j;
         Prb temp;
         for (int i = 0; i < k; i++) {
-            temp = prbs.get(prbs.size() - 1);
-            for (j = prbs.size() - 2; j >= 0; j--) {
-                prbs.set(j + 1, prbs.get(j));
+            temp = prbs.get(0);
+            for (j = 1; j < prbs.size(); j++) {
+                prbs.set(j - 1, prbs.get(j));
             }
-            prbs.set(0, temp);
+            prbs.set(prbs.size() - 1, temp);
         }
         return prbs;
     }
@@ -151,12 +147,35 @@ public class SendService extends Thread {
             eachPrb.setS90(xxpic);
         } else if (eachPrb.getEmptyIndex() == 19) {
             eachPrb.setS91(xxpic);
+        } else {
+            return 1;
         }
-        int index = eachPrb.getEmptyIndex();
-        eachPrb.setEmptyIndex(index + 1);
-        return index;
+        eachPrb.setEmptyIndex(eachPrb.getEmptyIndex() + 1);
+        return 0;
     }
 
+    public List<Prb> sendPrb() {
+        List<Prb> prbs = prbRepository.findAll();
+        simpMessagingTemplate.convertAndSend("/prb", prbs);
+        return prbs;
+    }
+
+    public List<Prb> shiftListRight(List<Prb> prbs, int k) {
+        int j;
+        Prb temp;
+        for (int i = 0; i < k; i++) {
+            temp = prbs.get(prbs.size() - 1);
+            for (j = prbs.size() - 2; j >= 0; j--) {
+                prbs.set(j + 1, prbs.get(j));
+            }
+            prbs.set(0, temp);
+        }
+        return prbs;
+    }
+
+    public void startup() {
+        new Thread(this).start();
+    }
 
     @Override
     public void run() {

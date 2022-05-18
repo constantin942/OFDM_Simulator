@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Table, Space, message } from 'antd';
+import { Form, Input, Button, Table, Space, message, Row, Col } from 'antd';
 import blackpic from "../assets/black.png"
 import bluepic from "../assets/blue.png"
 import greenpic from "../assets/green.png"
@@ -44,14 +44,14 @@ const columns = [
     title: 'subframe 0',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's00',
         key: 's00',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's01',
         key: 's01',
         width: 30,
@@ -63,14 +63,14 @@ const columns = [
     title: 'subframe 1',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's10',
         key: 's10',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's11',
         key: 's11',
         width: 30,
@@ -82,14 +82,14 @@ const columns = [
     title: 'subframe 2',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's20',
         key: 's20',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's21',
         key: 's21',
         width: 30,
@@ -101,14 +101,14 @@ const columns = [
     title: 'subframe 3',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's30',
         key: 's30',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's31',
         key: 's31',
         width: 30,
@@ -120,14 +120,14 @@ const columns = [
     title: 'subframe 4',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's40',
         key: 's40',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's41',
         key: 's41',
         width: 30,
@@ -139,14 +139,14 @@ const columns = [
     title: 'subframe 5',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's50',
         key: 's50',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's51',
         key: 's51',
         width: 30,
@@ -158,14 +158,14 @@ const columns = [
     title: 'subframe 6',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's60',
         key: 's60',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's61',
         key: 's61',
         width: 30,
@@ -177,14 +177,14 @@ const columns = [
     title: 'subframe 7',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's70',
         key: 's70',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's71',
         key: 's71',
         width: 30,
@@ -196,14 +196,14 @@ const columns = [
     title: 'subframe 8',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's80',
         key: 's80',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's81',
         key: 's81',
         width: 30,
@@ -215,14 +215,14 @@ const columns = [
     title: 'subframe 9',
     children: [
       {
-        title: 's0',
+        title: 'slot 0',
         dataIndex: 's90',
         key: 's90',
         width: 30,
         render: (text) => <img src={text} alt="" width="30px" />
       },
       {
-        title: 's1',
+        title: 'slot 1',
         dataIndex: 's91',
         key: 's91',
         width: 30,
@@ -271,6 +271,7 @@ export default class GraphEx extends Component {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onKeyUp_1 = this.onKeyUp_1.bind(this);
     this.postData = this.postData.bind(this);
+    this.reload = this.reload.bind(this);
 
     this.state = {
       prb_list: [],
@@ -352,6 +353,8 @@ export default class GraphEx extends Component {
 
     this.setState({
       prb_list: endjson,
+    },() => {
+      console.log(this.state.prb_list)
     });
   }
 
@@ -442,7 +445,7 @@ export default class GraphEx extends Component {
 
     PrbDataService.create(data)
       .then(response => {
-        console.log(response.data + "\nresponse from backend");
+        console.log(response);
         mes = response.data;
         switch (mes) {
           case 'success':
@@ -457,7 +460,7 @@ export default class GraphEx extends Component {
             message.warning({ content: 'enough number of PRB' });
             break;
           case 'nothing there':
-            message.warning({ content: 'nothing input'});
+            message.warning({ content: 'nothing input' });
             break;
           case 'failed':
             message.error({ content: 'failed' });
@@ -497,7 +500,7 @@ export default class GraphEx extends Component {
 
     PrbDataService.create(data)
       .then(response => {
-        console.log(response.data + "\nresponse from backend");
+        console.log(response);
         mes = response.data;
         switch (mes) {
           case 'success':
@@ -512,7 +515,7 @@ export default class GraphEx extends Component {
             message.warning({ content: 'enough number of PRB' });
             break;
           case 'nothing there':
-            message.warning({ content: 'nothing input'});
+            message.warning({ content: 'nothing input' });
             break;
           case 'failed':
             message.error({ content: 'failed' });
@@ -529,16 +532,24 @@ export default class GraphEx extends Component {
   }
 
   onKeyUp(e) {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
       this.onChangeInit();
     }
   }
-  
+
   onKeyUp_1 = (e) => {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
       this.postData();
     }
-  }  
+  }
+
+  reload = () => {
+    // this.forceUpdate();
+    this.setState({
+      submitted: false,
+    });
+    window.location.reload(); // state & props 没有重新渲染
+  }
 
   render() {
     return (
@@ -575,23 +586,30 @@ export default class GraphEx extends Component {
               size="middle"
             // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
             />
-            <Form layout="inline">
-              <Form.Item
-                label="Data size"
-                required tooltip="This is a required field"
-                rules={[{ required: true, },]}>
-                <Input
-                  name="data"
-                  type="number"
-                  placeholder="please enter a number"
-                  onChange={this.onChangeDataSize}
-                  onKeyUp={this.onKeyUp_1}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" onClick={this.postData}>Submit</Button>
-              </Form.Item>
-            </Form>
+            <Row>
+              <Col span={20}>
+                <Form layout="inline" justify="space-between">
+                  <Form.Item
+                    label="Data size"
+                    required tooltip="This is a required field"
+                    rules={[{ required: true, },]}>
+                    <Input
+                      name="data"
+                      type="number"
+                      placeholder="please enter a number"
+                      onChange={this.onChangeDataSize}
+                      onKeyUp={this.onKeyUp_1}
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" onClick={this.postData}>Submit</Button>
+                  </Form.Item>
+                </Form>
+              </Col>
+              <Col span={4}>
+                <Button type="primary" onClick={this.reload}>Restart</Button>
+              </Col>
+            </Row>
           </Space>)}
       </>
     );

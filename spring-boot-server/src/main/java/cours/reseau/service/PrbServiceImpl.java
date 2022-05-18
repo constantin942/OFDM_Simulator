@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +20,9 @@ public class PrbServiceImpl implements PrbService {
     private final SignalRepository signalRepository;
     private final SignalService signalService;
     private final SendService sendService;
+    HashMap<String, Couleur> couleurHashMap = new HashMap<String, Couleur>() {{
+        put("lastOne", Couleur.BLACK);
+    }};
 
 
     @Override
@@ -33,7 +33,7 @@ public class PrbServiceImpl implements PrbService {
 
     @Override
     public String createPrb(HashMap<String, Integer> hashMap) {
-        int prbNum = 0, dataSize = 0;
+        int prbNum , dataSize;
         if (hashMap.containsKey("prbNum")) {
             prbNum = hashMap.get("prbNum");
             int original_num = (int) prbRepository.count();
@@ -53,15 +53,17 @@ public class PrbServiceImpl implements PrbService {
         }
         if (hashMap.containsKey("dataSize")) {
             dataSize = hashMap.get("dataSize");
-
             List<Couleur> usedColor = signalRepository.findDistinctCouleur();
             if (usedColor.size() >= 9) {
                 return "oversize";
             }
             // TODO : 判断是否超过9种颜色进入等待池
-            for (Couleur each : Couleur.values()) {
-                if (!usedColor.contains(each)) {
+            List<Couleur> couleurs = Arrays.asList(Couleur.values());
+            Collections.shuffle(couleurs);
+            for (Couleur each : couleurs) {
+                if (!usedColor.contains(each) && !couleurHashMap.get("lastOne").equals(each)) {
                     signalService.create(each, dataSize, usedColor.size());
+                    couleurHashMap.put("lastOne", each);
                     break;
                 }
             }
