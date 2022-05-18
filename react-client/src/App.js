@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Component } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import "./App.css";
+import About from "./components/about.component";
 import GraphEx from "./components/chart-graph.component.js";
 
 
@@ -36,7 +37,7 @@ class App extends Component {
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/graph"]} component={GraphEx} />
-            <Route exact path="/about" component={GraphEx} />
+            <Route exact path="/about" component={About} />
             <Route exact path="/test" component={GraphEx} />
           </Switch>
         </div>
