@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Table, Space, message, Row, Col } from 'antd';
+import { Input, Button, Table, Space, message, Row, Col } from 'antd';
 import blackpic from "../assets/black.png"
 import bluepic from "../assets/blue.png"
 import greenpic from "../assets/green.png"
@@ -13,6 +13,9 @@ import PrbDataService from "../services/prb.service";
 // import { InfoCircleOutlined, } from '@ant-design/icons';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
+
+
+const { Search } = Input;
 
 
 const columns = [
@@ -265,9 +268,9 @@ var stompClient = null;
 export default class GraphEx extends Component {
   constructor(props) {
     super(props);
-    this.onChangePrb = this.onChangePrb.bind(this);
+    this.onChange = this.onChange.bind(this);
     this.onChangeDataSize = this.onChangeDataSize.bind(this);
-    this.onChangeInit = this.onChangeInit.bind(this);
+    this.onSearch = this.onSearch.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onKeyUp_1 = this.onKeyUp_1.bind(this);
     this.postData = this.postData.bind(this);
@@ -353,7 +356,7 @@ export default class GraphEx extends Component {
 
     this.setState({
       prb_list: endjson,
-    },() => {
+    }, () => {
       console.log(this.state.prb_list)
     });
   }
@@ -482,13 +485,13 @@ export default class GraphEx extends Component {
     });
   }
 
-  onChangePrb(e) {
+  onChange(e) {
     this.setState({
       prbNum: e.target.value
     });
   }
 
-  onChangeInit() {
+  onSearch() {
     this.setState({
       submitted: false
     })
@@ -555,26 +558,41 @@ export default class GraphEx extends Component {
     return (
       <>
         {this.state.submitted ? (
-          <div>
-            <Form>
-              <Form.Item
-                label="Number of PRB"
-                required tooltip="This is a required field"
-                rules={[{ required: true, },]}
-              >
-                <Input
-                  name="prb"
-                  type="number"
-                  placeholder="please enter a number"
-                  onChange={this.onChangePrb}
-                  onKeyUp={this.onKeyUp}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" onClick={this.onChangeInit}>Submit</Button>
-              </Form.Item>
-            </Form>
-          </div>
+          <Row type="flex" justify="center" align="middle" style={{ minHeight: '100vh' }}>
+            <Col>
+              <Search
+                name="prb"
+                addonBefore="PRB Num"
+                placeholder="please enter a number"
+                allowClear
+                enterButton="Submit"
+                size="large"
+                onChange={this.onChange}
+                // type="number"  //会有小的选择框不需要
+                // onKeyUp={this.onKeyUp}   // 按回车会自动输入，否则会调用两次
+                onSearch={this.onSearch}
+              />
+              {/* <br/>
+              <Form>
+                <Form.Item
+                  label="Number of PRB"
+                  required tooltip="This is a required field"
+                  rules={[{ required: true, },]}
+                >
+                  <Input
+                    name="prb"
+                    type="number"
+                    placeholder="please enter a number"
+                    onChange={this.onChange}
+                    onKeyUp={this.onKeyUp}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" onClick={this.onSearch}>Submit</Button>
+                </Form.Item>
+              </Form> */}
+            </Col>
+          </Row>
         ) : (
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Table
@@ -587,26 +605,18 @@ export default class GraphEx extends Component {
             // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
             />
             <Row>
-              <Col span={20}>
-                <Form layout="inline" justify="space-between">
-                  <Form.Item
-                    label="Data size"
-                    required tooltip="This is a required field"
-                    rules={[{ required: true, },]}>
-                    <Input
-                      name="data"
-                      type="number"
-                      placeholder="please enter a number"
-                      onChange={this.onChangeDataSize}
-                      onKeyUp={this.onKeyUp_1}
-                    />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type="primary" onClick={this.postData}>Submit</Button>
-                  </Form.Item>
-                </Form>
+              <Col span={8}>
+                <Search
+                  name="signal"
+                  addonBefore="data size"
+                  placeholder="please enter a number"
+                  enterButton="Submit"
+                  size="large"
+                  onChange={this.onChangeDataSize}
+                  onSearch={this.postData}
+                />
               </Col>
-              <Col span={4}>
+              <Col span={2} offset={14}>
                 <Button type="primary" onClick={this.reload}>Restart</Button>
               </Col>
             </Row>
