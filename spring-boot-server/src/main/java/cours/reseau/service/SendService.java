@@ -23,6 +23,34 @@ public class SendService extends Thread {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
 
+    private int handleSignal(int signalNum, int prbNum, int out,
+                              List<Prb> prbList, List<Signal> signalList) {
+        int index;
+        int shift = 0;
+        for (int i = 0; i < prbNum; i++) {
+            if (signalNum > i) {
+                index = i - shift;
+            } else {
+                index = (i - shift) % signalNum;
+            }
+            Prb eachPrb = prbList.get(i);
+            Signal signal = signalList.get(index);
+            Couleur couleur = signal.getCouleur();
+            String xxpic = couleur.toString().toLowerCase() + "pic";
+            out = setSlot(eachPrb, xxpic);
+            signal.setTaille(signal.getTaille() - 10);
+            if (signal.getTaille() <= 0) {
+                signalList.remove(index);
+                --signalNum;
+                ++shift;
+                signalRepository.deleteById(signal.getId());
+                if (signalList.isEmpty())
+                    break;
+            }
+        }
+        return out;
+    }
+
     public void continuousTrans() {
         for (; ; ) {
             try {
@@ -32,12 +60,12 @@ public class SendService extends Thread {
             }
             List<Signal> signalList = signalRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
             List<Prb> prbList = prbRepository.findAll();
-            int signalNum = signalList.size();
-            int prbNum = prbList.size();
             if (signalList.isEmpty() || prbList.isEmpty())
                 continue;
 //            System.out.println("signalList: " + signalList);
 //            System.out.println("prbList: " + prbList);
+            int signalNum = signalList.size();
+            int prbNum = prbList.size();
             int minIndex = prbList.get(0).getEmptyIndex();
             int shift_value = 0;
             for (Prb each : prbList) {
@@ -47,34 +75,14 @@ public class SendService extends Thread {
                 ++shift_value;
             }
             prbList = shiftListLeft(prbList, shift_value);
-            int out = 0;
+            int out;
             if (signalNum <= prbNum) {
-                int index;
-                int shift = 0;
-                for (int i = 0; i < prbNum; i++) {
-                    if (signalNum > i) {
-                        index = i - shift;
-                    } else {
-                        index = (i - shift) % signalNum;
-                    }
-                    Prb eachPrb = prbList.get(i);
-                    Signal signal = signalList.get(index);
-                    Couleur couleur = signal.getCouleur();
-                    String xxpic = couleur.toString().toLowerCase() + "pic";
-                    out = setSlot(eachPrb, xxpic);
-                    signal.setTaille(signal.getTaille() - 10);
-                    if (signal.getTaille() <= 0) {
-                        signalList.remove(index);
-                        --signalNum;
-                        ++shift;
-                        signalRepository.deleteById(signal.getId());
-                        if (signalList.isEmpty())
-                            break;
-                    }
-                }
+                out = handleSignal(signalNum, prbNum, 0, prbList, signalList);
             } else {
                 // TODO: signalNum > prbNum case
-
+                signalList = signalList.subList(0, prbNum);
+                signalNum = prbNum;
+                out = handleSignal(signalNum, prbNum, 0, prbList, signalList);
             }
             // do all time
             signalRepository.saveAll(signalList);
