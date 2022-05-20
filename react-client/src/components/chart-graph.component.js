@@ -562,7 +562,7 @@ export default class GraphEx extends Component {
 
   render() {
     return (
-      <>
+      <div className="container" style={{ marginTop: -28 }}>
         {this.state.submitted ? (
           <Row type="flex" justify="center" align="middle" style={{ minHeight: '100vh' }}>
             <Col>
@@ -627,7 +627,7 @@ export default class GraphEx extends Component {
               </Col>
             </Row>
           </Space>)}
-      </>
+      </div>
     );
   }
 }

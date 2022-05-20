@@ -18,7 +18,7 @@ class About extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container mt-3">
         <div >
           <Typography className="warp-content">
             <Title level={2}>About OFDM Simulator</Title>

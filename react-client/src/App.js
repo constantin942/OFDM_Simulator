@@ -34,13 +34,11 @@ class App extends Component {
           </div>
         </nav>
 
-        <div className="container mt-3">
-          <Switch>
-            <Route exact path={["/", "/graph"]} component={GraphEx} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/test" component={GraphEx} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path={["/", "/graph"]} component={GraphEx} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/test" component={GraphEx} />
+        </Switch>
       </div>
     );
   }
