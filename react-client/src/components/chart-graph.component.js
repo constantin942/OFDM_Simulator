@@ -562,23 +562,24 @@ export default class GraphEx extends Component {
 
   render() {
     return (
-      <div className="container" style={{ marginTop: -28 }}>
+      <div>
         {this.state.submitted ? (
-          <Row type="flex" justify="center" align="middle" style={{ minHeight: '100vh' }}>
-            <Col>
-              <Search
-                name="prb"
-                addonBefore="PRB Num"
-                placeholder="Please enter a number"
-                allowClear
-                enterButton="Submit"
-                size="large"
-                onChange={this.onChange}
-                // type="number"  //会有小的选择框不需要
-                // onKeyUp={this.onKeyUp}   // 按回车会自动输入，否则会调用两次
-                onSearch={this.onSearch}
-              />
-              {/* <br/>
+          <div className="container" style={{ marginTop: -28 }}>
+            <Row type="flex" justify="center" align="middle" style={{ minHeight: '100vh' }}>
+              <Col>
+                <Search
+                  name="prb"
+                  addonBefore="PRB Num"
+                  placeholder="Please enter a number"
+                  allowClear
+                  enterButton="Submit"
+                  size="large"
+                  onChange={this.onChange}
+                  // type="number"  //会有小的选择框不需要
+                  // onKeyUp={this.onKeyUp}   // 按回车会自动输入，否则会调用两次
+                  onSearch={this.onSearch}
+                />
+                {/* <br/>
               <Form>
                 <Form.Item
                   label="Number of PRB"
@@ -597,36 +598,42 @@ export default class GraphEx extends Component {
                   <Button type="primary" onClick={this.onSearch}>Submit</Button>
                 </Form.Item>
               </Form> */}
-            </Col>
-          </Row>
-        ) : (
-          <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-            <Table
-              pagination={false}
-              columns={columns}
-              // dataSource={data}
-              dataSource={this.state.prb_list}
-              bordered
-              size="middle"
-            // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
-            />
-            <Row>
-              <Col span={8}>
-                <Search
-                  name="signal"
-                  addonBefore="Data size (Mo)"
-                  placeholder="Please enter the size"
-                  enterButton="Submit"
-                  size="large"
-                  onChange={this.onChangeDataSize}
-                  onSearch={this.postData}
-                />
-              </Col>
-              <Col span={2} offset={14}>
-                <Button type="primary" onClick={this.reload}>Restart</Button>
               </Col>
             </Row>
-          </Space>)}
+          </div>
+
+        ) : (
+          <div className="container mt-3">
+
+            <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+              <Table
+                pagination={false}
+                columns={columns}
+                // dataSource={data}
+                dataSource={this.state.prb_list}
+                bordered
+                size="middle"
+              // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
+              />
+              <Row>
+                <Col span={8}>
+                  <Search
+                    name="signal"
+                    addonBefore="Data size (Mo)"
+                    placeholder="Please enter the size"
+                    enterButton="Submit"
+                    size="large"
+                    onChange={this.onChangeDataSize}
+                    onSearch={this.postData}
+                  />
+                </Col>
+                <Col span={2} offset={14}>
+                  <Button type="primary" onClick={this.reload}>Restart</Button>
+                </Col>
+              </Row>
+            </Space>
+          </div>
+        )}
       </div>
     );
   }

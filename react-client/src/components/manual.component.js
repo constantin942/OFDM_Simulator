@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 const { Title, Paragraph, Text } = Typography;
 
-class About extends Component {
+class Manual extends Component {
 
   state = {}
 
@@ -21,7 +21,7 @@ class About extends Component {
       <div className="container mt-3">
         <div >
           <Typography className="warp-content">
-            <Title level={2}>About OFDM Simulator</Title>
+            <Title level={2}>Manual OFDM Simulator</Title>
             <Title level={3}>What is OFDM</Title>
             <Paragraph>
               <Text>
@@ -81,4 +81,4 @@ class About extends Component {
   }
 }
 
-export default About
+export default Manual
