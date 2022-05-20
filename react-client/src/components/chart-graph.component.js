@@ -357,7 +357,7 @@ export default class GraphEx extends Component {
     this.setState({
       prb_list: endjson,
     }, () => {
-      console.log(this.state.prb_list)
+      // console.log(this.state.prb_list)  // 回调函数
     });
   }
 
@@ -492,24 +492,25 @@ export default class GraphEx extends Component {
   }
 
   onSearch() {
-    this.setState({
-      submitted: false
-    })
-
-    var mes;
     var data = {
       prbNum: this.state.prbNum
     };
 
     PrbDataService.create(data)
       .then(response => {
-        console.log(response);
+        let mes;
         mes = response.data;
+        if (data.prbNum === '0') {  // typeof(data.prbNum) === string
+          mes = 'zero';
+        }
         switch (mes) {
           case 'success':
             message.success({
               content: 'success',
             });
+            break;
+          case 'zero':
+            message.error({ content: 'reenter a number' });
             break;
           case 'oversize':
             message.warning({ content: 'oversize' });
@@ -531,6 +532,14 @@ export default class GraphEx extends Component {
         console.log(e);
       })
 
+    if (data.prbNum === '0') {
+      return
+    }
+
+    this.setState({
+      submitted: false
+    })
+
     this.sendMessage();
   }
 
@@ -548,10 +557,7 @@ export default class GraphEx extends Component {
 
   reload = () => {
     // this.forceUpdate();
-    this.setState({
-      submitted: false,
-    });
-    window.location.reload(); // state & props 没有重新渲染
+    window.location.reload(); // state & props 有重新渲染
   }
 
   render() {
@@ -563,7 +569,7 @@ export default class GraphEx extends Component {
               <Search
                 name="prb"
                 addonBefore="PRB Num"
-                placeholder="please enter a number"
+                placeholder="Please enter a number"
                 allowClear
                 enterButton="Submit"
                 size="large"
@@ -608,8 +614,8 @@ export default class GraphEx extends Component {
               <Col span={8}>
                 <Search
                   name="signal"
-                  addonBefore="data size"
-                  placeholder="please enter a number"
+                  addonBefore="Data size (Mo)"
+                  placeholder="Please enter the size"
                   enterButton="Submit"
                   size="large"
                   onChange={this.onChangeDataSize}
