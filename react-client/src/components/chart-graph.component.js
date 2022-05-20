@@ -361,10 +361,8 @@ export default class GraphEx extends Component {
     });
   }
 
-  sendMessage = () => {
-    // const payloadData = this.handleJsonOut(this.state.prb_list); //取消了payload传输
-    // stompClient.send("/app/message", {}, JSON.stringify(payloadData));
-    stompClient.send("/app/message", {}, '');
+  sendMessage = (create) => {
+    stompClient.send("/app/message", {}, JSON.stringify(create));
   }
 
   onError = (err) => {
@@ -476,7 +474,7 @@ export default class GraphEx extends Component {
         console.log(e);
       })
 
-    this.sendMessage();
+    this.sendMessage(false);
   }
 
   onChangeDataSize(e) {
@@ -540,7 +538,7 @@ export default class GraphEx extends Component {
       submitted: false
     })
 
-    this.sendMessage();
+    this.sendMessage(true);
   }
 
   onKeyUp(e) {
@@ -555,8 +553,13 @@ export default class GraphEx extends Component {
     }
   }
 
+  sendReload = () => {
+    stompClient.send("/app/delete", {}, '');
+  }
+
   reload = () => {
     // this.forceUpdate();
+    this.sendReload();
     window.location.reload(); // state & props 有重新渲染
   }
 

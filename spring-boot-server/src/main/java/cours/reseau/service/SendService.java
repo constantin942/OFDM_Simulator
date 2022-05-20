@@ -54,7 +54,7 @@ public class SendService extends Thread {
     public void continuousTrans() {
         for (; ; ) {
             try {
-                Thread.sleep(1500);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -90,7 +90,7 @@ public class SendService extends Thread {
             sendPrb();
             if (out == 1) {
                 try {
-                    Thread.sleep(4000); // same as before for database writing
+                    Thread.sleep(3000); // same as before for database writing
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
