@@ -84,7 +84,6 @@ public class SendService extends Thread {
             if (signalNum <= prbNum) {
                 out = handleSignal(signalNum, prbNum, 0, prbList, signalList);
             } else {
-                // TODO: signalNum > prbNum case
                 signalList = signalList.subList(0, prbNum);
                 signalNum = prbNum;
                 out = handleSignal(signalNum, prbNum, 0, prbList, signalList);
@@ -192,6 +191,7 @@ public class SendService extends Thread {
 
     @Override
     public void run() {
+        this.setCirculation(true);
         Map<Thread, StackTraceElement[]> map = getAllStackTraces();
 //        if (map.size() != 0) {
 //            for (Thread thread : map.keySet()) {
