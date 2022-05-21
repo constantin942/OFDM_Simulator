@@ -17,6 +17,5 @@ public class DestroyAction {
     public void destroy() {
         prbService.deleteAllPrbs();
         signalService.deleteAll();
-        System.out.println("所有对象已销毁");
     }
 }

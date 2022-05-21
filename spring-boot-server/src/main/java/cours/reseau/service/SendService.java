@@ -5,7 +5,9 @@ import cours.reseau.model.Prb;
 import cours.reseau.model.Signal;
 import cours.reseau.repository.PrbRepository;
 import cours.reseau.repository.SignalRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,10 +19,13 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Getter
+@Setter
 public class SendService extends Thread {
     private final PrbRepository prbRepository;
     private final SignalRepository signalRepository;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private boolean circulation = true;
 
 
     private int handleSignal(int signalNum, int prbNum, int out,
@@ -52,7 +57,7 @@ public class SendService extends Thread {
     }
 
     public void continuousTrans() {
-        for (; ; ) {
+        while (circulation) {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
