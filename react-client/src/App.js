@@ -5,7 +5,6 @@ import { Link, Route, Switch } from "react-router-dom";
 import "./App.css";
 import About from "./components/about.component";
 import GraphEx from "./components/chart-graph.component.js";
-import Manual from "./components/manual.component";
 
 
 class App extends Component {
@@ -22,11 +21,6 @@ class App extends Component {
                 About
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to={"/manual"} className="nav-link">
-                Manual
-              </Link>
-            </li>
             <li>
               <Link to={"/graph"} className="nav-link">
                 Graph
@@ -38,7 +32,6 @@ class App extends Component {
         <Switch>
           <Route exact path={["/", "/graph"]} component={GraphEx} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/manual" component={Manual} />
         </Switch>
       </div>
     );
