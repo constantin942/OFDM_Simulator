@@ -33,7 +33,7 @@ public class PrbController {
     }
 
     @PostMapping("/prbData")
-    public ResponseEntity<String> createPrb(@RequestBody HashMap<String, Integer> hashMap) {
+    public ResponseEntity<String> createPrb(@RequestBody HashMap<String, String> hashMap) {
         try {
             String message = prbService.createPrb(hashMap);
             return new ResponseEntity<>(message, HttpStatus.CREATED);

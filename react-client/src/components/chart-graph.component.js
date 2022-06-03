@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { Input, Button, Table, Space, message, Row, Col } from 'antd';
-import blackpic from "../assets/black.png"
 import bluepic from "../assets/blue.png"
 import greenpic from "../assets/green.png"
 import redpic from "../assets/red.png"
 import yellowpic from "../assets/yellow.png"
 import orangepic from "../assets/orange.png"
-import pinkpic from "../assets/pink.png"
 import purplepic from "../assets/purple.png"
-import greypic from "../assets/grey.png"
 import PrbDataService from "../services/prb.service";
 // import { InfoCircleOutlined, } from '@ant-design/icons';
 import SockJS from 'sockjs-client';
@@ -44,194 +41,144 @@ const columns = [
     width: 20,
   },
   {
-    title: 'subframe 0',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's00',
-        key: 's00',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's01',
-        key: 's01',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n1',
+    dataIndex: 's00',
+    key: 's00',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 1',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's10',
-        key: 's10',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's11',
-        key: 's11',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n2',
+    dataIndex: 's01',
+    key: 's01',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 2',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's20',
-        key: 's20',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's21',
-        key: 's21',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n3',
+    dataIndex: 's10',
+    key: 's10',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 3',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's30',
-        key: 's30',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's31',
-        key: 's31',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n4',
+    dataIndex: 's11',
+    key: 's11',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 4',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's40',
-        key: 's40',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's41',
-        key: 's41',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n5',
+    dataIndex: 's20',
+    key: 's20',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 5',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's50',
-        key: 's50',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's51',
-        key: 's51',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n6',
+    dataIndex: 's21',
+    key: 's21',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 6',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's60',
-        key: 's60',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's61',
-        key: 's61',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n7',
+    dataIndex: 's30',
+    key: 's30',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 7',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's70',
-        key: 's70',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's71',
-        key: 's71',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n8',
+    dataIndex: 's31',
+    key: 's31',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 8',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's80',
-        key: 's80',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's81',
-        key: 's81',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      }
-    ]
+    title: 'sub\nframe\n9',
+    dataIndex: 's40',
+    key: 's40',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
   },
   {
-    title: 'subframe 9',
-    children: [
-      {
-        title: 'slot 0',
-        dataIndex: 's90',
-        key: 's90',
-        width: 30,
-        render: (text) => <img src={text} alt="" width="30px" />
-      },
-      {
-        title: 'slot 1',
-        dataIndex: 's91',
-        key: 's91',
-        width: 30,
-        render: (text) => <img src={text} alt="" width={30} />
-      }
-    ]
+    title: 'sub\nframe\n10',
+    dataIndex: 's41',
+    key: 's41',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n11',
+    dataIndex: 's50',
+    key: 's50',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n12',
+    dataIndex: 's51',
+    key: 's51',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n13',
+    dataIndex: 's60',
+    key: 's60',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n14',
+    dataIndex: 's61',
+    key: 's61',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n15',
+    dataIndex: 's70',
+    key: 's70',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n16',
+    dataIndex: 's71',
+    key: 's71',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n17',
+    dataIndex: 's80',
+    key: 's80',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n18',
+    dataIndex: 's81',
+    key: 's81',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n19',
+    dataIndex: 's90',
+    key: 's90',
+    width: 30,
+    render: (text) => <img src={text} alt="" width="30px" />
+  },
+  {
+    title: 'sub\nframe\n20',
+    dataIndex: 's91',
+    key: 's91',
+    width: 30,
+    render: (text) => <img src={text} alt="" width={30} />
   },
 ];
 
@@ -241,26 +188,26 @@ for (let i = 0; i < 6; i++) {
   data.push({
     key: i,
     prb: 'PRB' + (5 - i),
-    s00: blackpic,
-    s01: blackpic,
-    s10: blackpic,
-    s11: blackpic,
-    s20: blackpic,
-    s21: blackpic,
-    s30: blackpic,
-    s31: blackpic,
-    s40: blackpic,
-    s41: blackpic,
-    s50: blackpic,
-    s51: blackpic,
-    s60: blackpic,
-    s61: blackpic,
-    s70: blackpic,
-    s71: blackpic,
-    s80: blackpic,
-    s81: blackpic,
-    s90: blackpic,
-    s91: blackpic,
+    s00: orangepic,
+    s01: orangepic,
+    s10: orangepic,
+    s11: orangepic,
+    s20: orangepic,
+    s21: orangepic,
+    s30: orangepic,
+    s31: orangepic,
+    s40: orangepic,
+    s41: orangepic,
+    s50: orangepic,
+    s51: orangepic,
+    s60: orangepic,
+    s61: orangepic,
+    s70: orangepic,
+    s71: orangepic,
+    s80: orangepic,
+    s81: orangepic,
+    s90: orangepic,
+    s91: orangepic,
   });
 }
 
@@ -278,8 +225,8 @@ export default class GraphEx extends Component {
 
     this.state = {
       prb_list: [],
-      dataSize: 0,
-      prbNum: 6,
+      dataSize: 0.0,
+      prbNum: 6.0,
       submitted: true,
     };
   }
@@ -321,9 +268,6 @@ export default class GraphEx extends Component {
       for (const [key, value] of Object.entries(element)) {
         // console.log(`${key}: ${value}`);
         switch (value) {
-          case "blackpic":
-            element[key] = blackpic;
-            break;
           case "bluepic":
             element[key] = bluepic;
             break;
@@ -333,14 +277,8 @@ export default class GraphEx extends Component {
           case "greenpic":
             element[key] = greenpic;
             break;
-          case "greypic":
-            element[key] = greypic;
-            break;
           case "yellowpic":
             element[key] = yellowpic;
-            break;
-          case "pinkpic":
-            element[key] = pinkpic;
             break;
           case "purplepic":
             element[key] = purplepic;
@@ -393,9 +331,6 @@ export default class GraphEx extends Component {
             for (const [key, value] of Object.entries(element)) {
               // console.log(`${key}: ${value}`);
               switch (value) {
-                case "blackpic":
-                  element[key] = blackpic;
-                  break;
                 case "bluepic":
                   element[key] = bluepic;
                   break;
@@ -405,14 +340,8 @@ export default class GraphEx extends Component {
                 case "greenpic":
                   element[key] = greenpic;
                   break;
-                case "greypic":
-                  element[key] = greypic;
-                  break;
                 case "yellowpic":
                   element[key] = yellowpic;
-                  break;
-                case "pinkpic":
-                  element[key] = pinkpic;
                   break;
                 case "purplepic":
                   element[key] = purplepic;
@@ -525,20 +454,17 @@ export default class GraphEx extends Component {
           default:
             break;
         }
+
+        if (mes !== 'failed') {
+          this.setState({
+            submitted: false
+          })
+          this.sendMessage(true);
+        }
       })
       .catch(e => {
         console.log(e);
       })
-
-    if (data.prbNum === '0') {
-      return
-    }
-
-    this.setState({
-      submitted: false
-    })
-
-    this.sendMessage(true);
   }
 
   onKeyUp(e) {
@@ -572,7 +498,7 @@ export default class GraphEx extends Component {
               <Col>
                 <Search
                   name="prb"
-                  addonBefore="PRB Num"
+                  addonBefore="BW (MHz)"
                   placeholder="Please enter a number"
                   allowClear
                   enterButton="Submit"

@@ -21,7 +21,15 @@ public class PrbServiceImpl implements PrbService {
     private final SignalService signalService;
     private final SendService sendService;
     HashMap<String, Couleur> couleurHashMap = new HashMap<String, Couleur>() {{
-        put("lastOne", Couleur.BLACK);
+        put("lastOne", Couleur.BLUE);
+    }};
+    HashMap<String, Integer> BW2PrbNum = new HashMap<String, Integer>() {{
+       put("1.4", 6);
+       put("3", 15);
+       put("5", 25);
+       put("10", 50);
+       put("15", 75);
+       put("20", 100);
     }};
 
 
@@ -32,10 +40,14 @@ public class PrbServiceImpl implements PrbService {
 
 
     @Override
-    public String createPrb(HashMap<String, Integer> hashMap) {
-        int prbNum , dataSize;
+    public String createPrb(HashMap<String, String> hashMap) {
+        int prbNum, dataSize;
+        String bandwidth;
         if (hashMap.containsKey("prbNum")) {
-            prbNum = hashMap.get("prbNum");
+            bandwidth = hashMap.get("prbNum");
+            if (!BW2PrbNum.containsKey(bandwidth))
+                return "failed";
+            prbNum = BW2PrbNum.get(bandwidth);
             int original_num = (int) prbRepository.count();
             if (original_num != 0 && prbNum != 0) {
                 return "enough";
@@ -52,12 +64,12 @@ public class PrbServiceImpl implements PrbService {
             return "failed";
         }
         if (hashMap.containsKey("dataSize")) {
-            dataSize = hashMap.get("dataSize");
+            dataSize = Integer.parseInt(hashMap.get("dataSize"));
+            dataSize *= 1024;
             List<Couleur> usedColor = signalRepository.findDistinctCouleur();
-            if (usedColor.size() >= 9) {
+            if (usedColor.size() >= 6) {
                 return "oversize";
             }
-            // TODO : 判断是否超过9种颜色进入等待池
             List<Couleur> couleurs = Arrays.asList(Couleur.values());
             Collections.shuffle(couleurs);
             for (Couleur each : couleurs) {

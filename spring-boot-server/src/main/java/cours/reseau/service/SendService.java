@@ -32,7 +32,9 @@ public class SendService extends Thread {
                               List<Prb> prbList, List<Signal> signalList) {
         int index;
         int shift = 0;
+        int symbolNum = 144;
         for (int i = 0; i < prbNum; i++) {
+            int bits = 0;
             if (signalNum > i) {
                 index = i - shift;
             } else {
@@ -43,7 +45,29 @@ public class SendService extends Thread {
             Couleur couleur = signal.getCouleur();
             String xxpic = couleur.toString().toLowerCase() + "pic";
             out = setSlot(eachPrb, xxpic);
-            signal.setTaille(signal.getTaille() - 10);
+            switch (couleur) {
+                case BLUE:
+                    bits = 1;
+                    break;
+                case GREEN:
+                    bits = 2;
+                    break;
+                case RED:
+                    bits = 3;
+                    break;
+                case YELLOW:
+                    bits = 4;
+                    break;
+                case ORANGE:
+                    bits = 5;
+                    break;
+                case PURPLE:
+                    bits = 6;
+                    break;
+                default:
+                    break;
+            }
+            signal.setTaille(signal.getTaille() - bits*symbolNum);
             if (signal.getTaille() <= 0) {
                 signalList.remove(index);
                 --signalNum;

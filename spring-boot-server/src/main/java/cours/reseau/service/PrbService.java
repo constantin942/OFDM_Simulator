@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PrbService {
     List<Prb> getAllPrbs();
-    String createPrb(HashMap<String, Integer> hashMap);
+    String createPrb(HashMap<String, String> hashMap);
     Prb updatePrb(Long id, Prb prb);
     void deleteAllPrbs();
 }
