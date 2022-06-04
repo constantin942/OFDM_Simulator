@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Button, Table, Space, message, Row, Col } from 'antd';
+import { Input, Button, Table, Space, message, Row, Col, Radio, Form, Descriptions } from 'antd';
 import bluepic from "../assets/blue.png"
 import greenpic from "../assets/green.png"
 import redpic from "../assets/red.png"
@@ -7,7 +7,7 @@ import yellowpic from "../assets/yellow.png"
 import orangepic from "../assets/orange.png"
 import purplepic from "../assets/purple.png"
 import PrbDataService from "../services/prb.service";
-// import { InfoCircleOutlined, } from '@ant-design/icons';
+import { RightOutlined, } from '@ant-design/icons';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 
@@ -226,7 +226,7 @@ export default class GraphEx extends Component {
     this.state = {
       prb_list: [],
       dataSize: 0.0,
-      prbNum: 6.0,
+      prbNum: 1.4,
       submitted: true,
     };
   }
@@ -496,7 +496,28 @@ export default class GraphEx extends Component {
           <div className="container" style={{ marginTop: -28 }}>
             <Row type="flex" justify="center" align="middle" style={{ minHeight: '100vh' }}>
               <Col>
-                <Search
+                <Form layout="inline">
+                  <Form.Item>
+                    <Radio.Group defaultValue="1.4" onChange={this.onChange}>
+                      <Radio value="1.4">1.4 MHz</Radio>
+                      <Radio value="3">3 MHz</Radio>
+                      <Radio value="5">5 MHz</Radio>
+                      <Radio value="10">10 MHz</Radio>
+                      <Radio value="15">15 MHz</Radio>
+                      <Radio value="20">20 MHz</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      onClick={this.onSearch}
+                      size={"large"}
+                      shape={"circle"}
+                      icon={<RightOutlined />}
+                    />
+                  </Form.Item>
+                </Form>
+                {/* <Search
                   name="prb"
                   addonBefore="BW (MHz)"
                   placeholder="Please enter a number"
@@ -507,33 +528,13 @@ export default class GraphEx extends Component {
                   // type="number"  //会有小的选择框不需要
                   // onKeyUp={this.onKeyUp}   // 按回车会自动输入，否则会调用两次
                   onSearch={this.onSearch}
-                />
-                {/* <br/>
-              <Form>
-                <Form.Item
-                  label="Number of PRB"
-                  required tooltip="This is a required field"
-                  rules={[{ required: true, },]}
-                >
-                  <Input
-                    name="prb"
-                    type="number"
-                    placeholder="please enter a number"
-                    onChange={this.onChange}
-                    onKeyUp={this.onKeyUp}
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" onClick={this.onSearch}>Submit</Button>
-                </Form.Item>
-              </Form> */}
+                /> */}
               </Col>
             </Row>
           </div>
 
         ) : (
           <div className="container mt-3">
-
             <Space direction="vertical" size="large" style={{ display: 'flex' }}>
               <Table
                 pagination={false}
@@ -544,21 +545,33 @@ export default class GraphEx extends Component {
                 size="middle"
               // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
               />
-              <Row>
-                <Col span={8}>
-                  <Search
-                    name="signal"
-                    addonBefore="Data size (Mo)"
-                    placeholder="Please enter the size"
-                    enterButton="Submit"
-                    size="large"
-                    onChange={this.onChangeDataSize}
-                    onSearch={this.postData}
-                  />
-                </Col>
-                <Col span={2} offset={14}>
-                  <Button type="primary" onClick={this.reload}>Restart</Button>
-                </Col>
+              <Row justify="space-between" align="bottom">
+                  <Col span={14}>
+                    <Descriptions title="" size="small" bordered>
+                      <Descriptions.Item label="BPSK"><img src={bluepic} alt="" width="30px" /></Descriptions.Item>
+                      <Descriptions.Item label="QPSK"><img src={greenpic} alt="" width="30px" /></Descriptions.Item>
+                      <Descriptions.Item label="8-PSK"><img src={redpic} alt="" width="30px" /></Descriptions.Item>
+                      <Descriptions.Item label="16-QAM"><img src={yellowpic} alt="" width="30px" /></Descriptions.Item>
+                      <Descriptions.Item label="32-QAM"><img src={orangepic} alt="" width="30px" /></Descriptions.Item>
+                      <Descriptions.Item label="64-QAM"><img src={purplepic} alt="" width="30px" /></Descriptions.Item>
+                    </Descriptions>
+                  </Col>
+                  <Col span={8}>
+                    <Space align="end" direction="vertical" size="middle">
+                      <Search
+                        name="signal"
+                        addonBefore="Data size (Mo)"
+                        placeholder="Please enter the size"
+                        enterButton="Submit"
+                        size="middle"
+                        onChange={this.onChangeDataSize}
+                        onSearch={this.postData}
+                      />
+                      <Button type="primary" size="middle" onClick={this.reload} danger>
+                        Restart
+                      </Button>
+                    </Space>
+                  </Col>
               </Row>
             </Space>
           </div>
