@@ -560,7 +560,7 @@ export default class GraphEx extends Component {
                   <Space align="end" direction="vertical" size="middle">
                     <Search
                       name="signal"
-                      addonBefore="Data size (Mo)"
+                      addonBefore="Data size (Mb)"
                       placeholder="Please enter the size"
                       enterButton="Submit"
                       size="middle"
