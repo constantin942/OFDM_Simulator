@@ -1,15 +1,15 @@
+import { RightOutlined } from '@ant-design/icons';
+import { Button, Col, Descriptions, Form, Input, message, Radio, Row, Space, Table } from 'antd';
 import React, { Component } from "react";
-import { Input, Button, Table, Space, message, Row, Col, Radio, Form, Descriptions } from 'antd';
-import bluepic from "../assets/blue.png"
-import greenpic from "../assets/green.png"
-import redpic from "../assets/red.png"
-import yellowpic from "../assets/yellow.png"
-import orangepic from "../assets/orange.png"
-import purplepic from "../assets/purple.png"
-import PrbDataService from "../services/prb.service";
-import { RightOutlined, } from '@ant-design/icons';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
+import bluepic from "../assets/blue.png";
+import greenpic from "../assets/green.png";
+import orangepic from "../assets/orange.png";
+import purplepic from "../assets/purple.png";
+import redpic from "../assets/red.png";
+import yellowpic from "../assets/yellow.png";
+import PrbDataService from "../services/prb.service";
 
 
 const { Search } = Input;
@@ -546,32 +546,32 @@ export default class GraphEx extends Component {
               // scroll={{ x: 'calc(700px + 50%)', y: 240 }}
               />
               <Row justify="space-between" align="bottom">
-                  <Col span={14}>
-                    <Descriptions title="" size="small" bordered>
-                      <Descriptions.Item label="BPSK"><img src={bluepic} alt="" width="30px" /></Descriptions.Item>
-                      <Descriptions.Item label="QPSK"><img src={greenpic} alt="" width="30px" /></Descriptions.Item>
-                      <Descriptions.Item label="8-PSK"><img src={redpic} alt="" width="30px" /></Descriptions.Item>
-                      <Descriptions.Item label="16-QAM"><img src={yellowpic} alt="" width="30px" /></Descriptions.Item>
-                      <Descriptions.Item label="32-QAM"><img src={orangepic} alt="" width="30px" /></Descriptions.Item>
-                      <Descriptions.Item label="64-QAM"><img src={purplepic} alt="" width="30px" /></Descriptions.Item>
-                    </Descriptions>
-                  </Col>
-                  <Col span={8}>
-                    <Space align="end" direction="vertical" size="middle">
-                      <Search
-                        name="signal"
-                        addonBefore="Data size (Mo)"
-                        placeholder="Please enter the size"
-                        enterButton="Submit"
-                        size="middle"
-                        onChange={this.onChangeDataSize}
-                        onSearch={this.postData}
-                      />
-                      <Button type="primary" size="middle" onClick={this.reload} danger>
-                        Restart
-                      </Button>
-                    </Space>
-                  </Col>
+                <Col span={14}>
+                  <Descriptions title="" size="small" bordered>
+                    <Descriptions.Item label="BPSK"><img src={bluepic} alt="" width="30px" /></Descriptions.Item>
+                    <Descriptions.Item label="QPSK"><img src={greenpic} alt="" width="30px" /></Descriptions.Item>
+                    <Descriptions.Item label="8-PSK"><img src={redpic} alt="" width="30px" /></Descriptions.Item>
+                    <Descriptions.Item label="16-QAM"><img src={yellowpic} alt="" width="30px" /></Descriptions.Item>
+                    <Descriptions.Item label="32-QAM"><img src={orangepic} alt="" width="30px" /></Descriptions.Item>
+                    <Descriptions.Item label="64-QAM"><img src={purplepic} alt="" width="30px" /></Descriptions.Item>
+                  </Descriptions>
+                </Col>
+                <Col span={8}>
+                  <Space align="end" direction="vertical" size="middle">
+                    <Search
+                      name="signal"
+                      addonBefore="Data size (Mo)"
+                      placeholder="Please enter the size"
+                      enterButton="Submit"
+                      size="middle"
+                      onChange={this.onChangeDataSize}
+                      onSearch={this.postData}
+                    />
+                    <Button type="primary" size="middle" onClick={this.reload} danger>
+                      Restart
+                    </Button>
+                  </Space>
+                </Col>
               </Row>
             </Space>
           </div>
